@@ -8,17 +8,16 @@ app=Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
-    conn = sqlite3.connect('/home/patrik/Documents/upinniemi/merikomppanija.db')
+    conn = sqlite3.connect('merikomppanija.db')
     c = conn.cursor()
     error = None
     if request.method == 'POST':
         username = request.form.get('username')  # access the data inside
         password = request.form.get('password')
-        c.execute(f"SELECT * FROM admin WHERE user = '{username}' and password = '{password}'")
+        c.execute(f"select * from admin where username = ? and password = ?", (username,password))
         data = c.fetchone()
         print(data)
     else:
-        print("penis")
         return render_template('index.html')
 
 
