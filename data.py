@@ -14,8 +14,9 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')  # access the data inside
         password = request.form.get('password')
-        c.execute(f"select * from admin where username = ? and password = ?", (username,password))
-        data = c.fetchone()
+        query = f'select * from admin where username = "{username}" and password = "{password}"'
+        c.execute(query)
+        data = c.fetchall()
         print(data)
     else:
         return render_template('index.html')
